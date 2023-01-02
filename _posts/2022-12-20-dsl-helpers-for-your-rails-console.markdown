@@ -3,25 +3,71 @@ layout: post
 title:  "DSL helpers for your Rails console"
 date:   2022-12-20 16:03:44 +0300
 categories: rails
-tags: ["rails", "console", "code performance"]
+tags: ["rails", "console", "development performance"]
 ---
 
-Сегодня я хотел бы поговорить про производительность на рутинных задачах работы в Rails консоли.
+Hi there!
 
-{% highlight ruby %}
+This is my first technical post on this blog.
+
+Working on a long-lived Rails project, we can face the situation of frequently using code snippets in Rails console. 
+
+It can be some sort of context switching (for example, **tenant switching** or **user switching**). It completely depends on your domain model and its technical implementation. Such routine can be simplified with **custom console helpers**.
+
+If you use gem like [apartment](https://github.com/influitive/apartment) for tenancy, your work in `development` or `production` console consists of such switching actions:
+
+```ruby
+Aparment::Tenant.switch!('tenant_name_1')
+
+# some tenant_name_1 job
+
+Aparment::Tenant.switch!('tenant_name_2')
+
+# some tenant_name_2 job
+```
+
+After hundreds and thousands times of writing `Apartment::Tenant...bla-bla` phrases, you feels anger.
+
+So, lets simplify this work with **custom console helpers**:
+
+```ruby
+module Ops
+  module CustomRailsConsoleMethods
+    def t(tenant_name)
+      Aparment::Tenant.switch!(tenant_name)
+    end
+  end
+end
+```
+ 
+Also we need to inform Rails about using this module in console:
+
+```ruby
 # config/application.rb
 console do
   Rails::ConsoleMethods.prepend(Ops::CustomRailsConsoleMethods)
 end
-{% endhighlight %}
+```
 
-TODO: Тут пример, как это выглядит в консоли до и после
+
+Now we can simply use:
+
+```ruby
+t 'tenant_name_1'
+
+# some tenant_name_1 job
+
+t 'tenant_name_2'
+
+# some tenant_name_2 job
+```
 
 
 ## Summary
 
 Ключевые пункты:
-- ваши хелперы должны соответствовать доменной логике вашего приложения
+- ваши хелперы должны соответствовать доменной логике вашего приложения. Идеи для хелперов переключения тенантов:
+  - `t`, `tn`, `tl` и др.
 - модифицируйте и усложняйте их под потребности
 - подумайте о защите от переписывания уже существующих методов (`if defined?`)
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Rails console DSL helpers"
-date:   2023-01-02 15:00:00 +0300
+date:   2023-01-06 15:00:00 +0300
 categories: rails
 tags: ["rails", "console", "development performance"]
 ---

@@ -33,7 +33,7 @@ plugins:
   - jekyll-feed
 
 header_pages:
-  - mentions.markdown
+  # - mentions.markdown
   - about.markdown
 
 # Exclude from processing.

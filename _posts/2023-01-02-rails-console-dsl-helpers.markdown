@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "DSL helpers for your Rails console"
+title:  "Rails console DSL helpers"
 date:   2023-01-02 15:00:00 +0300
 categories: rails
 tags: ["rails", "console", "development performance"]
@@ -8,13 +8,15 @@ tags: ["rails", "console", "development performance"]
 
 Hi there!
 
-This is my first post on this blog. I decided to start to share some of my technical experience here. Well, let's go!
+This is my first post on this blog. I decided to start to share some of my technical experience here. Well, let's get started!
+
+## Problem
 
 Working on a long-lived Rails project, we can face the situation of frequently using code snippets on the Rails console. 
 
-It can be some sort of context switching (for example, **tenant switching** or **user switching**) or some sort of tooling. It completely depends on your domain model and its technical implementation. Such a routine can be simplified with **custom console helpers**.
+It can be some sort of context switching (for example, **tenant switching** or **user switching**) or some sort of tooling. It completely depends on your domain model and its technical implementation.
 
-If you use gems like [apartment](https://github.com/influitive/apartment) for tenancy handling, your work on `development` or `production` console consists of constant switchings:
+If you use gems like [apartment](https://github.com/influitive/apartment) for tenancy handling, your sessions on `development` or `production` console consist of constant switchings:
 
 ```ruby
 Aparment::Tenant.switch!('tenant_name_1')
@@ -28,9 +30,11 @@ Aparment::Tenant.switch!('tenant_name_2')
 
 After hundreds and thousands of times of writing `Apartment::Tenant...bla-bla` phrases, you feel anger. And you want to reduce your keyboard activity.
 
-So, let's simplify this work with **custom console helpers**. 
+Such a routine can be simplified with **custom console helpers**.
 
-First, create a ruby class with the necessary helpers:
+## Solution
+
+First, create a ruby class with the necessary methods:
 
 ```ruby
 module Ops
@@ -42,7 +46,7 @@ module Ops
 end
 ```
  
-Also, we need to inform Rails about using this module on console:
+Second, inform Rails about using this module on console:
 
 ```ruby
 # config/application.rb
@@ -52,7 +56,7 @@ end
 ```
 
 
-Now we can simply use:
+Finally, we can simply use a shortened version of the command on the console:
 
 ```ruby
 t 'tenant_name_1'
@@ -65,25 +69,25 @@ t 'tenant_name_2'
 ```
 
 
-Yay! We got a boost!
+Yay! Speed up!
 
 ## Next steps
 
-### Name helpers in logic of your domain
+### Name helpers in the logic of your domain
 
-Just some ideas from logic of tenant switching.
+Just some ideas about the logic of tenant switching.
 
 Names of methods:
 - `t` - switch tenant
 - `tn` - print current tenant name
-- `tl` - list existed tenant names
+- `tl` - list existing tenant names
 - `on_each_tenant` - iterator over all tenants
 
-### Modify helpers according with your needs
+### Modify helpers according to your needs
 
-Tenant switching method can apply some search patterns on argument.
+The tenant switching method can apply some search patterns to arguments.
 
-If your have following list of tenant names:
+If you have the following list of tenant names:
 - `big_theatre`
 - `maly_theatre`
 - `sydney_opera`
@@ -97,7 +101,7 @@ Looks nice.
 
 ### Think about naming conflicts
 
-Sometimes your **custom console helpers** can conflict with other code. So you can safe your from these conflicts with:
+Sometimes your **custom console helpers** can conflict with other code. So you can save yourself from these conflicts with:
 
 
 ```ruby
@@ -114,4 +118,4 @@ end
 
 ## Summary
 
-Your development speed is a big value, so such worflow improvements like a **custom console helpers** matter. Spend your time wisely.
+Your development speed is a big value, so such workflow improvements like **custom console helpers** matter. Take care of your time.

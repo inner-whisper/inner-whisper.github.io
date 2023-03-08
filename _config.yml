@@ -16,7 +16,7 @@ minimal_mistakes_skin    :  "contrast" #"default" # "air", "aqua", "contrast", "
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Max Rydkin"
+title                    : "rydkin.dev"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Maxim Rydkin"

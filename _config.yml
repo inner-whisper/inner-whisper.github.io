@@ -33,6 +33,7 @@ plugins:
   - jekyll-feed
 
 header_pages:
+  - opensource.markdown
   # - mentions.markdown
   - about.markdown
 

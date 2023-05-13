@@ -14,13 +14,13 @@ There are many aspects of working with such tests and many articles have been wr
 
 ## TLDR
 
-If you find it too difficult to reproduce the conditions of specific `flaky` tests, use the `rspec-retry` gem. If possible, limit this use with gem settings such as `exceptions_to_retry`, and apply it only to certain types of tests. radually reduce the number of retry tests: learn how to reproduce test failure conditions.
+If you find it too difficult to reproduce the conditions of specific `flaky` tests, use the `rspec-retry` gem. If possible, limit this use with gem settings such as `exceptions_to_retry`, and apply it only to certain types of tests. Gradually reduce the number of retry tests: learn how to reproduce test failure conditions.
 
 ## Problem
 
 There are many reasons why running a single test as part of an entire test suite can result in an unstable crash (flaky spec):
 1. The order in which the tests are run
-2. a certain moment of time (e.g. `on Sunday after 22:00`)
+2. A certain moment of time (e.g. `on Sunday after 22:00`)
 3. Network problems
 4. Sorting result of data selection from SQL queries (if no explicit sorting)
 5. etc.
@@ -108,4 +108,4 @@ Over time, almost every team/specialist expands their competencies. Accordingly,
 
 A possible way to deal with `flaky` specs is to try to restart them in case of a crash. It is desirable to use this approach only when reproducing test crash conditions is difficult for one reason or another. Gem `rspec-retry` can help to implement this approach. The settings of this gem allow you to limit the scope in which it is applied.
 
-Use the `rspec-retry' approach carefully, as it can shoot you in the foot.
+Use the `rspec-retry` approach carefully, as it can shoot you in the foot.
